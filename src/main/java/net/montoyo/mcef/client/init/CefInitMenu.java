@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.montoyo.mcef.utilities.CefUtil;
 import net.montoyo.mcef.utilities.IProgressListener;
 
@@ -45,7 +46,7 @@ public class CefInitMenu extends Screen {
 	
 	public CefInitMenu(TitleScreen menu) {
 //		super(Component.translatable("mcef.menu.init"));
-		super(Component.literal("MCEF hasn't finished downloading CEF yet"));
+		super(new TextComponent("MCEF hasn't finished downloading CEF yet"));
 		this.menu = menu;
 	}
 	
@@ -57,7 +58,7 @@ public class CefInitMenu extends Screen {
 		bufferbuilder.vertex(matrix, (float) x1, (float) y1, (float) z).color(r, g, b, a).endVertex();
 		bufferbuilder.vertex(matrix, (float) x1, (float) y0, (float) z).color(r, g, b, a).endVertex();
 		bufferbuilder.vertex(matrix, (float) x0, (float) y0, (float) z).color(r, g, b, a).endVertex();
-		BufferUploader.drawWithShader(bufferbuilder.end());
+		BufferUploader.end(bufferbuilder);
 	}
 	
 	@Override

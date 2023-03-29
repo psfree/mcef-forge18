@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.montoyo.mcef.api.IBrowser;
 import org.lwjgl.glfw.GLFW;
 
@@ -21,7 +22,7 @@ public class ScreenCfg extends Screen {
     private boolean drawSquare = true;
 
     public ScreenCfg(IBrowser b, String vId) {
-        super(Component.translatable("forgecef.screen.config.title"));
+        super(new TranslatableComponent("forgecef.screen.config.title"));
         browser = b;
         if(vId != null)
             b.loadURL("https://www.youtube.com/embed/" + vId + "?autoplay=1");
