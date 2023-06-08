@@ -58,6 +58,7 @@ public class CefInitMenu extends Screen {
 		bufferbuilder.vertex(matrix, (float) x1, (float) y1, (float) z).color(r, g, b, a).endVertex();
 		bufferbuilder.vertex(matrix, (float) x1, (float) y0, (float) z).color(r, g, b, a).endVertex();
 		bufferbuilder.vertex(matrix, (float) x0, (float) y0, (float) z).color(r, g, b, a).endVertex();
+		bufferbuilder.end();
 	}
 	
 	@Override
