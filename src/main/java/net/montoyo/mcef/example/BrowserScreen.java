@@ -58,6 +58,7 @@ public class BrowserScreen extends Screen {
             browser = api.createBrowser((urlToLoad == null) ? MCEF.HOME_PAGE : urlToLoad, false);
             browser.resize(minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight() - scaleY(20));
             urlToLoad = null;
+            browser.allowCursorChanges(true);
         }
 
         //Resize the browser if window size changed
@@ -147,15 +148,21 @@ public class BrowserScreen extends Screen {
 
     @Override
     public void onClose() {
-        //Make sure to close the browser when you don't need it anymore.
-        if (!ExampleMod.INSTANCE.hasBackup() && browser != null) {
-            browser.close();
-        }
-
         // Keyboard.enableRepeatEvents(false);
         super.onClose();
     }
-
+    
+    // onClose is less reliable
+    @Override
+    public void removed() {
+        //Make sure to close the browser when you don't need it anymore.
+        if (!ExampleMod.INSTANCE.hasBackup() && browser != null) {
+            browser.allowCursorChanges(false);
+            browser.close();
+        }
+        super.removed();
+    }
+    
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         return this.keyChanged(keyCode, scanCode, modifiers, true) || super.keyPressed(keyCode, scanCode, modifiers);
@@ -169,7 +176,7 @@ public class BrowserScreen extends Screen {
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
         if (browser != null && !url.isFocused()) {
-            browser.injectKeyTyped((int) codePoint, modifiers);
+            browser.injectKeyTyped(codePoint, modifiers);
             return true;
         } else {
             return super.charTyped(codePoint, modifiers);
@@ -201,7 +208,8 @@ public class BrowserScreen extends Screen {
         char key = keystr.charAt(keystr.length() - 1);
 
         if(keystr.equals("Enter")) {
-            key = '\r';
+            keyCode = 10;
+            key = '\n';
         }
 
         if (browser != null && !focused) { //Inject events into browser
@@ -210,8 +218,11 @@ public class BrowserScreen extends Screen {
             else
                 browser.injectKeyReleasedByKeyCode(keyCode, key, modifiers);
 
-            if(key == '\r')
-                browser.injectKeyTyped(key, 0);
+            if (pressed && key == '\n')
+                if (
+//                        (modifiers & GLFW.GLFW_MOD_SHIFT) != 0
+                        modifiers != 0
+                ) browser.injectKeyTyped('\r', modifiers);
             return true; // Something did happen
         }
 
