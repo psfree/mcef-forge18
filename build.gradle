@@ -73,7 +73,7 @@ repositories{
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.1'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.18'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
