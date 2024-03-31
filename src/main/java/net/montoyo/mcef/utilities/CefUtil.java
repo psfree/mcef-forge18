@@ -21,6 +21,7 @@ import org.cef.handler.CefLifeSpanHandlerAdapter;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.util.Objects;
 
 public final class CefUtil {
 
@@ -126,8 +127,9 @@ public final class CefUtil {
         settings.windowless_rendering_enabled = true;
         settings.background_color = settings.new ColorType(0, 255, 255, 255);
         settings.cache_path = (new File(JCEF_ROOT, "cache")).getAbsolutePath();
-        // settings.user_agent = "MCEF"
-    
+        settings.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 MCEF/2";
+
+
         CefApp.startup(MCEF.CEF_ARGS);
         cefApp = CefApp.getInstance(settings);
 
